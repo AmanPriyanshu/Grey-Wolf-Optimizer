@@ -25,7 +25,7 @@ def plot(intermediate_populations, gwo, base_N=250, tmp_name="tmp.jpg"):
 	losses = fitness_function(complete_pop)
 	images = []
 	width = None
-	for pop in tqdm(intermediate_populations, desc="Plotting Graphs"):
+	for idx, pop in enumerate(tqdm(intermediate_populations, desc="Plotting Graphs")):
 		plt.cla()
 		plt.clf()
 		plt.rcParams["figure.figsize"] = (5,5)
@@ -39,6 +39,7 @@ def plot(intermediate_populations, gwo, base_N=250, tmp_name="tmp.jpg"):
 		ax.scatter3D(x_beta[0:1], x_beta[1:2], fitness_function(np.array([x_beta])), c=fitness_function(np.array([x_beta])), cmap="Reds", edgecolor="b", s=50, label="Beta Wolf")
 		ax.scatter3D(x_delta[0:1], x_delta[1:2], fitness_function(np.array([x_delta])), c=fitness_function(np.array([x_delta])), cmap="Reds", edgecolor="m", s=50, label="Delta Wolf")
 		plt.legend()
+		plt.title("Iteration Number "+str(idx+1)+" | average_pack_loss=("+str(round(np.mean(losses_pop), 2))+")")
 		plt.savefig(tmp_name)
 		img = Image.open(tmp_name)
 		if width is None:
